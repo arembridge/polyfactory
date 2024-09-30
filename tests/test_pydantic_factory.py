@@ -485,6 +485,16 @@ def test_alias_parsing() -> None:
     assert isinstance(MyFactory.build().aliased_field, str)
 
 
+def test_alias_leading_underscore_parsing() -> None:
+    class MyModel(BaseModel):
+        aliased_field: str = Field(alias="_special_leading_underscore_field")
+
+    class MyFactory(ModelFactory):
+        __model__ = MyModel
+
+    assert isinstance(MyFactory.build().aliased_field, str)
+
+
 def test_type_property_parsing() -> None:
     class Base(BaseModel):
         if IS_PYDANTIC_V2:
